@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Paper, Avatar, Typography, useTheme, InputBase, Box, styled, Badge } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector} from 'react-redux';
 
 import Message from './Message';
 
@@ -39,6 +39,7 @@ export default function MessagesScreen() {
     const dispatch = useDispatch()
     const theme = useTheme();
     const [message, setMessage] = useState("")
+    const state = useSelector((state) => state.messagesReducer )
 
 const onTextChange = (e) => {
     setMessage(e.target.value)
@@ -89,13 +90,14 @@ dispatch({type: "ADD_MESSAGE", payload: {
             }}
         >
             <Box sx={{ display: 'flex', justifyContent: 'flex-end !important', flexDirection: 'column' }}>
-              <Message />
+              {/* <Message />
                 <Message />
                 <Message />
                 <Message owner />
                 <Message owner />
                 <Message />
-                <Message owner /> 
+                <Message owner />  */}
+                {state.map((item) =>  <Message message={item.message} /> )}
             </Box>
         </Box>
         <Paper
