@@ -29,7 +29,16 @@ export default function Homepage() {
   };
 
   return (
-    <Box sx={{ ...theme.typography.flex, px: "100px", height: "100vh" }}>
+    <Box
+      sx={{
+        ...theme.typography.flex,
+        px: "100px",
+        height: "100vh",
+        "@media (max-width: 500px)": {
+          px: "10px",
+        },
+      }}
+    >
       <InputBase
         onKeyDown={handleKeyDown}
         data-testid="home-button"
