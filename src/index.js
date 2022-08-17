@@ -1,16 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import App from './App';
+import { createStorageListener } from './store/utils/storage-listener';
 
+window.store = store;
+
+window.addEventListener('storage', createStorageListener(store))
 
 ReactDOM.render(
+    <Provider store={store}>
             <React.StrictMode>
                 <Router>
                     <App />
                 </Router>
             </React.StrictMode>
-      ,
+    </Provider>,
     document.getElementById('root')
 );
 
