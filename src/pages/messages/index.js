@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Paper, Avatar, Typography, useTheme, InputBase, Box, styled, Badge } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import { useDispatch } from 'react-redux';
 
 import Message from './Message';
 
@@ -35,7 +36,19 @@ const StyledBadge = styled(Badge)(({ theme, active }) => ({
 }));
 
 export default function MessagesScreen() {
+    const dispatch = useDispatch()
     const theme = useTheme();
+    const [message, setMessage] = useState("")
+
+const onTextChange = (e) => {
+    setMessage(e.target.value)
+}
+
+const onSubmit = () => {
+dispatch({type: "ADD_MESSAGE", payload: {
+    message, name: "kolade"
+}})
+}
 
     return (
 
@@ -75,13 +88,6 @@ export default function MessagesScreen() {
             
             }}
         >
-            {/* chats
-        <Box>
-            {chats.map((item) => (
-                <ChatItem {...item} />
-            ))}
-        </Box>
-         */}
             <Box sx={{ display: 'flex', justifyContent: 'flex-end !important', flexDirection: 'column' }}>
               <Message />
                 <Message />
@@ -109,6 +115,7 @@ export default function MessagesScreen() {
             }}
         >
             <InputBase
+            onChange={onTextChange}
                 sx={{
                     flex: 1,
                     background: '#EAEAEA',
@@ -122,7 +129,7 @@ export default function MessagesScreen() {
                 placeholder="Type your message"
             />
             
-            <Avatar sx={{ bgcolor: theme.palette.primary.main, cursor: "pointer" }}>
+            <Avatar onClick={onSubmit} sx={{ bgcolor: theme.palette.primary.main, cursor: "pointer" }}>
                 <SendIcon fontSize="small" />
             </Avatar>
         </Paper>
