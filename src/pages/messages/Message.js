@@ -20,6 +20,9 @@ export default function Message({ owner = false, message, name }) {
                 padding: "15px",
                 borderRadius: "10px",
                 width: "500px",
+                "@media (max-width: 500px)": {
+                  width: "200px",
+                },
               }}
             >
               {message}
@@ -39,13 +42,22 @@ export default function Message({ owner = false, message, name }) {
             mt: "10px",
           }}
         >
-          <Box sx={{ width: "500px" }}>
+          <Box
+            sx={{
+              width: "500px",
+              "@media (max-width: 500px)": {
+                width: "200px",
+              },
+            }}
+          >
             <Typography
               sx={{
                 bgcolor: "#D6D6D6",
                 padding: "15px",
                 borderRadius: "10px",
-                width: "500px",
+                "@media (max-width: 500px)": {
+                  width: "200px",
+                },
               }}
             >
               {message}
