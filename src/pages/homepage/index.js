@@ -8,8 +8,6 @@ export default function Homepage() {
   const [name, setName] = useState("");
   let navigate = useNavigate();
 
-  const profileName = getSessionData("profileName");
-
   const onTextChange = (e) => {
     const { value } = e.target;
     if (value.trim()) {
@@ -24,9 +22,17 @@ export default function Homepage() {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      navigateToMessages();
+    }
+  };
+
   return (
     <Box sx={{ ...theme.typography.flex, px: "100px", height: "100vh" }}>
       <InputBase
+        onKeyDown={handleKeyDown}
+        data-testid="home-button"
         onChange={onTextChange}
         sx={{
           flex: 1,
