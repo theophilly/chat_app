@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Paper,
@@ -16,6 +16,14 @@ import { Navigate } from "react-router-dom";
 
 import Message from "./Message";
 import { getSessionData } from "../../utils/getSessionData";
+
+const scrollToBottom = () => {
+  window.scrollTo({
+    left: 0,
+    top: document.body.scrollHeight,
+    behavior: "smooth",
+  });
+};
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -52,6 +60,10 @@ export default function MessagesScreen() {
   const [message, setMessage] = useState("");
   const state = useSelector((state) => state.messagesReducer);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
   const profileName = getSessionData("profileName");
 
   if (!profileName) {
@@ -75,11 +87,7 @@ export default function MessagesScreen() {
       },
     });
     setMessage("");
-    window.scrollTo({
-      left: 0,
-      top: document.body.scrollHeight,
-      behavior: "smooth",
-    });
+    scrollToBottom();
   };
 
   const handleKeyDown = (event) => {
@@ -119,7 +127,7 @@ export default function MessagesScreen() {
           <Avatar
             sx={{ width: 65, height: 65 }}
             alt="Remy Sharp"
-            src="./LD Logo-adeyemi.png"
+            src="./nature.jpg"
           />
         </StyledBadge>
         <Typography
