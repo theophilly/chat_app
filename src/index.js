@@ -1,16 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistConfig, persistor } from './store';
 import App from './App';
+import crossBrowserListener from './store/utils/reduxpersist-listener';
 
+window.store = store;
+
+window.addEventListener('storage', crossBrowserListener(store, persistConfig));
 
 ReactDOM.render(
+    <Provider store={store}>
+         <PersistGate loading={null} persistor={persistor}>
             <React.StrictMode>
                 <Router>
                     <App />
                 </Router>
             </React.StrictMode>
-      ,
+            </PersistGate>
+    </Provider>,
     document.getElementById('root')
 );
 
