@@ -159,11 +159,7 @@ export default function MessagesScreen() {
           }}
         >
           {state.map((item) => (
-            <Message
-              owner={profileName === item.name}
-              message={item.message}
-              name={item.name}
-            />
+            <Message owner={profileName === item.name} chat={item} />
           ))}
         </Box>
       </Box>

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Box, InputBase, useTheme, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { getSessionData } from "../../utils/getSessionData";
+import { useDispatch } from "react-redux";
 
 export default function Homepage() {
   const theme = useTheme();
   const [name, setName] = useState("");
   let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onTextChange = (e) => {
     const { value } = e.target;
@@ -16,8 +17,14 @@ export default function Homepage() {
     }
   };
 
-  const navigateToMessages = () => {
+  const navigateToMessages = async () => {
     if (name) {
+      await dispatch({
+        type: "ADD_USER",
+        payload: {
+          user: name,
+        },
+      });
       navigate("/messages", { replace: true });
     }
   };
@@ -49,7 +56,6 @@ export default function Homepage() {
           borderRadius: "10px",
           border: "none",
           pl: "15px",
-
           height: "50px",
           width: "100%",
         }}

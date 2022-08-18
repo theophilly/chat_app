@@ -9,6 +9,9 @@ const messages = (state = [], action) => {
         },
       ];
 
+    case "ADD_USER":
+      return [...state, { user: action.payload.user }];
+
     default:
       return state;
   }
