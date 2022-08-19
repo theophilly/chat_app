@@ -1,8 +1,36 @@
 import React from "react";
 import { Avatar, Typography, useTheme, Box } from "@mui/material";
 
-export default function Message({ owner = false, message, name }) {
+export default function Message({ owner = false, chat }) {
   const theme = useTheme();
+
+  if (chat.hasOwnProperty("user")) {
+    return (
+      <Box
+        sx={{
+          ...theme.typography.flex,
+          justifyContent: "center",
+          mt: "5px",
+        }}
+      >
+        <Typography
+          sx={{
+            background: "#EAEAEA",
+            borderRadius: "8px",
+            border: "none",
+            height: "max-content",
+            width: "max-content",
+            padding: "5px 10px",
+            fontSize: ".85rem",
+            color: "#54656F",
+          }}
+        >
+          {`${chat.user} joined the chat`}
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <>
       {!owner && (
@@ -11,7 +39,7 @@ export default function Message({ owner = false, message, name }) {
         >
           <Box sx={{ display: "flex", alignItems: "flex-end" }}>
             <Avatar
-              alt={name}
+              alt={chat.name}
               sx={{ width: 35, height: 35, mr: "10px", mb: "3px" }}
             />
             <Typography
@@ -25,11 +53,11 @@ export default function Message({ owner = false, message, name }) {
                 },
               }}
             >
-              {message}
+              {chat.message}
             </Typography>
           </Box>
           <Typography sx={{ textAlign: "end", fontSize: "0.7rem" }}>
-            {name}
+            {chat.name}
           </Typography>
         </Box>
       )}
@@ -60,11 +88,11 @@ export default function Message({ owner = false, message, name }) {
                 },
               }}
             >
-              {message}
+              {chat.message}
             </Typography>
 
             <Typography sx={{ textAlign: "end", fontSize: "0.7rem" }}>
-              {name}
+              {chat.name}
             </Typography>
           </Box>
         </Box>
