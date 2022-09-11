@@ -1,100 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
-  Grid,
   Paper,
   Avatar,
   Typography,
   useTheme,
   InputBase,
   Box,
-  styled,
-  Badge,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 import Message from "./Message";
 import { getSessionData } from "../../utils/getSessionData";
-
-const scrollToBottom = () => {
-  window.scrollTo({
-    left: 0,
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
-};
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    backgroundColor: "#44b700",
-    color: "#44b700",
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    "&::after": {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      borderRadius: "50%",
-      animation: "ripple 1.2s infinite ease-in-out",
-      border: "1px solid currentColor",
-      content: '""',
-    },
-  },
-  "@keyframes ripple": {
-    "0%": {
-      transform: "scale(.8)",
-      opacity: 1,
-    },
-    "100%": {
-      transform: "scale(2.4)",
-      opacity: 0,
-    },
-  },
-}));
+import { scrollToBottom } from "../../utils/scrollToBotom";
+import { useMessageActions } from "../../hooks/useMessageActions";
+import { StyledBadge } from "./StyledBadge";
 
 export default function MessagesScreen() {
-  const dispatch = useDispatch();
   const theme = useTheme();
-  const [message, setMessage] = useState("");
   const state = useSelector((state) => state.messagesReducer);
+  const profileName = getSessionData("profileName");
+  const { onTextChange, onSubmit, handleKeyDown, message } = useMessageActions(
+    profileName
+  );
 
   useEffect(() => {
     scrollToBottom();
   }, []);
 
-  const profileName = getSessionData("profileName");
-
   if (!profileName) {
     return <Navigate to="/" />;
   }
-
-  const onTextChange = (e) => {
-    setMessage(e.target.value);
-  };
-
-  const onSubmit = () => {
-    if (!message.trim()) {
-      return;
-    }
-
-    dispatch({
-      type: "ADD_MESSAGE",
-      payload: {
-        message,
-        name: profileName,
-      },
-    });
-    setMessage("");
-    scrollToBottom();
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      onSubmit();
-    }
-  };
 
   return (
     <Box
